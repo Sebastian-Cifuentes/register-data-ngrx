@@ -1,1 +1,74 @@
-<p>contact-form works!</p>
+<p class="text-4xl text-center">Formulario de contacto</p>
+
+<div class="bg-white">   
+    <p class="text-gray-800 text-4xl text-center mb-3 pb-0 pt-2">Contacto</p>
+    <div class="grid px-4 pb-4">
+        <div class="col-6 md:col-12 lg:col-6 p-8">
+            <app-info></app-info>
+        </div>
+        <div class="col-6 md:col-12 lg:col-6">
+            <form action="">
+                <div class="formgrid grid">
+                    <div class="flex flex-column field col-12 md:col-6">
+                        <label for="firstname2" class="text-gray-800">Sexo <span class="text-red-500">*</span></label>
+                        <p-dropdown
+                            [options]="sexs" 
+                            optionLabel="name" 
+                            placeholder="Seleccioné un sexo" />
+                    </div>
+                    <div class="flex flex-column field col-12 md:col-6">
+                        <label for="firstname2" class="text-gray-800">Fecha de nacimiento <span class="text-red-500">*</span></label>
+                        <p-calendar />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="firstname2" class="text-gray-800">Nombre <span class="text-red-500">*</span></label>
+                        <input id="firstname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="lastname2" class="text-gray-800">Apellido <span class="text-red-500">*</span></label>
+                        <input id="lastname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field col-12 md:col-12">
+                        <label for="lastname2" class="text-gray-800">Email <span class="text-red-500">*</span></label>
+                        <input id="lastname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field col-12 md:col-12">
+                        <label for="lastname2" class="text-gray-800">Dirección <span class="text-red-500">*</span></label>
+                        <input id="lastname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="firstname2" class="text-gray-800">Casa / apartamento</label>
+                        <input id="firstname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="lastname2" class="text-gray-800">País <span class="text-red-500">*</span></label>
+                        <p-dropdown
+                            [options]="countries" 
+                            optionLabel="name" 
+                            placeholder="Seleccioné un país" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="lastname2" class="text-gray-800">Departamento <span class="text-red-500">*</span></label>
+                        <p-dropdown
+                            [options]="cities" 
+                            optionLabel="name" 
+                            placeholder="Seleccioné un departamento" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="lastname2" class="text-gray-800">Ciudad <span class="text-red-500">*</span></label>
+                        <p-dropdown
+                            [options]="cities" 
+                            optionLabel="name" 
+                            placeholder="Seleccione una ciudad" />
+                    </div>
+                    <div class="field col-12 md:col-12">
+                        <label for="firstname2" class="text-gray-800">Comentarios <span class="text-red-500">*</span></label>
+                        <textarea id="firstname2" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full"></textarea>
+                    </div>
+                </div>
+            </form>
+            <p-button label="Enviar" />
+
+        </div>
+    </div>
+</div>
