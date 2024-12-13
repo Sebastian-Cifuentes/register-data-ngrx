@@ -1,11 +1,12 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { FormErrorService } from "../services/form-error.service";
 import { inject } from "@angular/core";
+import { IFormBase } from "../interfaces/form-base.interface";
 
-export abstract class FormBase {
+export abstract class FormBase implements IFormBase {
 
     parentForm!: FormGroup;
-    _formErrorService = inject(FormErrorService);
+    formErrorService = inject(FormErrorService);
 
     constructor(
     ) {}
@@ -24,7 +25,7 @@ export abstract class FormBase {
   
     getErrorMessage(control: string): string[] {
       if (this.getError(control)) {
-        return this._formErrorService.mapErrors(this.getControl(control)!);
+        return this.formErrorService.mapErrors(this.getControl(control)!);
       }
       return [];
     }

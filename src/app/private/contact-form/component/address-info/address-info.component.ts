@@ -38,7 +38,6 @@ export class AddressInfoComponent extends FormBase {
   }
 
   validateCountry() {
-    console.log('country');
     const country = this.getControl('country').value;
     if (country.code === 'COL') {
       this.getControl('Deparment').enable();
