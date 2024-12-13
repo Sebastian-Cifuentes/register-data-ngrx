@@ -3,83 +3,14 @@
 <div class="bg-white">   
     <p class="text-gray-800 text-4xl text-center mb-3 pb-0 pt-2">Contacto</p>
     <div class="grid px-4 pb-4">
-        <div class="col-6 md:col-12 lg:col-6 p-8">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6 p-8">
             <app-info></app-info>
         </div>
-        <div class="col-6 md:col-12 lg:col-6">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
             <form [formGroup]="form">
-                <div class="formgrid grid">
-                    <div class="flex flex-column field col-12 md:col-6">
-                        <label for="sex" class="text-gray-800">Sexo <span class="text-red-500">*</span></label>
-                        <p-dropdown
-                            [ngClass]="getError('sex') ? 'invalid' : ''"
-                            formControlName="sex"
-                            [options]="sexs" 
-                            optionLabel="name" 
-                            placeholder="Seleccioné un sexo" />
-                            <small class="text-red-300" [hidden]="!getError('sex')">{{getErrorMessage('sex')}}</small>
-                    </div>
-                    <div class="flex flex-column field col-12 md:col-6">
-                        <label for="date_birthday" class="text-gray-800">Fecha de nacimiento <span class="text-red-500">*</span></label>
-                        <p-calendar [ngClass]="getError('date_birthday') ? 'invalid' : ''" formControlName="date_birthday"/>
-                        <small class="text-red-300" [hidden]="!getError('date_birthday')">{{getErrorMessage('date_birthday')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="name" class="text-gray-800">Nombre <span class="text-red-500">*</span></label>
-                        <input [ngClass]="getError('name') ? 'invalid' : ''" formControlName="name" id="name" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
-                        <small class="text-red-300" [hidden]="!getError('name')">{{getErrorMessage('name')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="last_name" class="text-gray-800">Apellido <span class="text-red-500">*</span></label>
-                        <input [ngClass]="getError('last_name') ? 'invalid' : ''" formControlName="last_name" id="last_name" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
-                        <small class="text-red-300" [hidden]="!getError('last_name')">{{getErrorMessage('last_name')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-12">
-                        <label for="email" class="text-gray-800">Email <span class="text-red-500">*</span></label>
-                        <input [ngClass]="getError('email') ? 'invalid' : ''" formControlName="email" id="email" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
-                        <small class="text-red-300" [hidden]="!getError('email')">{{getErrorMessage('email')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-12">
-                        <label for="addres" class="text-gray-800">Dirección <span class="text-red-500">*</span></label>
-                        <input [ngClass]="getError('addres') ? 'invalid' : ''" formControlName="addres" id="addres" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full">
-                        <small class="text-red-300" [hidden]="!getError('addres')">{{getErrorMessage('addres')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-12">
-                        <label for="country" class="text-gray-800">País <span class="text-red-500">*</span></label>
-                        <p-dropdown
-                            [ngClass]="getError('country') ? 'invalid' : ''"
-                            formControlName="country"
-                            [options]="countries" 
-                            optionLabel="name" 
-                            placeholder="Seleccioné un país" />
-                            <small class="text-red-300" [hidden]="!getError('country')">{{getErrorMessage('country')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="Deparment" class="text-gray-800">Departamento <span class="text-red-500">*</span></label>
-                        <p-dropdown
-                            [ngClass]="getError('Deparment') ? 'invalid' : ''"
-                            formControlName="Deparment"
-                            [options]="cities" 
-                            optionLabel="name" 
-                            placeholder="Seleccioné un departamento" />
-                            <small class="text-red-300" [hidden]="!getError('Deparment')">{{getErrorMessage('Deparment')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="City" class="text-gray-800">Ciudad <span class="text-red-500">*</span></label>
-                        <p-dropdown
-                            [ngClass]="getError('City') ? 'invalid' : ''"
-                            formControlName="City"
-                            [options]="cities" 
-                            optionLabel="name" 
-                            placeholder="Seleccione una ciudad" />
-                            <small class="text-red-300" [hidden]="!getError('City')">{{getErrorMessage('City')}}</small>
-                    </div>
-                    <div class="field col-12 md:col-12">
-                        <label for="comment" class="text-gray-800">Comentarios <span class="text-red-500">*</span></label>
-                        <textarea [ngClass]="getError('comment') ? 'invalid' : ''" formControlName="comment" id="comment" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full"></textarea>
-                        <small class="text-red-300" [hidden]="!getError('comment')">{{getErrorMessage('comment')}}</small>
-                    </div>
-                </div>
+                <app-personal-info></app-personal-info>
+                <app-address-info></app-address-info>
+                <app-comments></app-comments>
             </form>
             <p-button [disabled]="!form.valid" (click)="save()" label="Enviar" />
 

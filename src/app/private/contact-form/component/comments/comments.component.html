@@ -1,0 +1,9 @@
+<div [formGroup]="parentForm">
+    <div class="formgrid grid">
+        <div class="field col-12 md:col-12">
+            <label for="comment" class="text-gray-800">Comentarios <span class="text-red-500">*</span></label>
+            <textarea [ngClass]="getError('comment') ? 'invalid' : ''" formControlName="comment" id="comment" type="text" class="text-base text-200 surface-800 p-2 border-1 surface-800 border-round outline-none focus:border-primary w-full"></textarea>
+            <small class="text-red-300" [hidden]="!getError('comment')">{{getErrorMessage('comment')}}</small>
+        </div>
+    </div>
+</div>

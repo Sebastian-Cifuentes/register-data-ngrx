@@ -1,18 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { DropdownModule } from 'primeng/dropdown';
-import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { InfoComponent } from './component/info/info.component';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormErrorService } from '../../services/form-error.service';
 import { ageValidator } from '../../utils/validators/age.validator';
+import { countries } from '../../utils/data/countries';
+import { departments } from '../../utils/data/departments';
+import { sex } from '../../utils/data/sex';
+import { PersonalInfoComponent } from './component/personal-info/personal-info.component';
+import { AddressInfoComponent } from './component/address-info/address-info.component';
+import { CommentsComponent } from './component/comments/comments.component';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FloatLabelModule, DropdownModule, CalendarModule, InfoComponent, ReactiveFormsModule, CommonModule],
+  imports: [InfoComponent, ReactiveFormsModule, PersonalInfoComponent, AddressInfoComponent, CommentsComponent, ButtonModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss'
 })
@@ -31,53 +33,24 @@ export class ContactFormComponent {
   ) {}
 
   ngOnInit() {
-    this.cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
-    this.sexs = [
-        { name: 'Masculino', code: 'M' },
-        { name: 'Femenino', code: 'F' }
-    ];
-    this.departments = [
-        { name: 'Amazonas', code: 'LDN' },
-        { name: 'Cundinamarca', code: 'NY' },
-        { name: 'Boyacá', code: 'RM' },
-    ];
-    this.countries = [
-        { name: 'Colombia', code: 'COL' },
-        { name: 'Argentina', code: 'ARG' },
-        { name: 'México', code: 'MEX' },
-    ];
+    this.sexs = sex;
+    this.departments = departments;
+    this.countries = countries;
     this.form = new FormGroup({
       sex: new FormControl('', Validators.required),
       date_birthday: new FormControl('', [Validators.required, ageValidator(18)]),
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       addres: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
-      Deparment: new FormControl('', Validators.required),
-      City: new FormControl('', Validators.required),
+      Deparment: new FormControl({value: '', disabled: true}, Validators.required),
+      City: new FormControl({value: '', disabled: true}, Validators.required),
       comment: new FormControl('', Validators.required),
     });
   }
 
   save() {
     console.log(this.form);
-  }
-
-  getError(control: string): boolean {
-    return this.form.get(control)!.invalid && this.form.get(control)!.touched;
-  }
-
-  getErrorMessage(control: string): string[] {
-    if (this.getError(control)) {
-      return this._formErrorService.mapErrors(this.form.get(control)!);
-    }
-    return [];
   }
 }
