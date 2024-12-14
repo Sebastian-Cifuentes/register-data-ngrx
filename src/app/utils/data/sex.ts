@@ -1,4 +1,4 @@
 export const sex = [
-    { name: 'Masculino', code: 'M' },
-    { name: 'Femenino', code: 'F' }
+    { name: 'Hombre', code: 'M' },
+    { name: 'Mujer', code: 'F' }
 ];
