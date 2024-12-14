@@ -1,4 +1,6 @@
-export const cities = [
+import { City } from "../../interfaces/city.interface";
+
+export const cities: City[] = [
     { name: 'El Encanto', code: 'ELE', deparment: 'AMA', country: 'COL' },
     { name: 'La Chorrera', code: 'LAC', deparment: 'AMA', country: 'COL' },
     { name: 'La Pedrera', code: 'LAP', deparment: 'AMA', country: 'COL' },
