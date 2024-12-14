@@ -1,8 +1,10 @@
 <p class="text-4xl text-center">Tabla de registros</p>
 
-<div class="card">
+<b [hidden]="!(loading$ | async)">Cargando... {{loading$ | async}}</b>
+
+<div [hidden]="(loading$ | async)" class="card">
     <p-table
-        [value]="users"
+        [value]="(users$! | async)"
         [tableStyle]="{ 'min-width': '50rem' }"
         [globalFilterFields]="['name', 'last_name']">
         <ng-template pTemplate="header">
