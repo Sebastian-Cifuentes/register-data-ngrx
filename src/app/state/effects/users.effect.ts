@@ -11,7 +11,7 @@ export class UsersEffects {
     ofType('[Users List] Load users'),
     exhaustMap(() => this.userService.getUsers()
       .pipe(
-        map(({users}) => ({ type: '[Users list] Loaded success', users })),
+        map(({users}) => ({ type: '[Users List] Loaded success', users })),
         catchError(() => EMPTY)
       ))
     )

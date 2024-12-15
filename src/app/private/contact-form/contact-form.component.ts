@@ -79,7 +79,7 @@ export class ContactFormComponent {
     let date_birthday = this.form.value.date_birthday;
     date_birthday = format(date_birthday, 'yyyy-MM-dd');
     this.form.value.country = this.form.value.country.name;
-    this.form.value.Deparment = this.form.value.Deparment.name;
+    this.form.value.Deparment = this.form.value.Deparment ? this.form.value.Deparment.name : '';
     this.form.value.City = this.form.value.City.name;
     const user: User = { ...this.form.value, date_birthday }
     user.id = this.lastUserId + 1;

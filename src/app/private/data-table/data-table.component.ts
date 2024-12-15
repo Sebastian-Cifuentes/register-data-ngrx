@@ -4,23 +4,24 @@ import { Store } from '@ngrx/store';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
-import { loadUsers } from '../../state/actions/users.actions';
-import { selectUsersList, selectUsersLoading } from '../../state/selectors/users.selectors';
+import { clearFilter, loadUsers, setFilter } from '../../state/actions/users.actions';
+import { selectFilteredUsers, selectUsersList, selectUsersLoading } from '../../state/selectors/users.selectors';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [TableModule, InputTextModule, AsyncPipe, ButtonModule],
+  imports: [TableModule, InputTextModule, AsyncPipe, ButtonModule, CalendarModule],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
 export class DataTableComponent {
 
   loading$: Observable<boolean> = new Observable();
-  users$: Observable<any> = new Observable();
+  filteredUsers$: Observable<any> = new Observable();
 
   constructor(
     private store: Store<any>,
@@ -29,10 +30,23 @@ export class DataTableComponent {
 
   ngOnInit() {
     this.loading$ = this.store.select(selectUsersLoading);
-    this.users$ = this.store.select(selectUsersList);
+    this.filteredUsers$ = this.store.select(selectFilteredUsers);
+    this.store.dispatch(clearFilter());
   }
 
   addContact() {
     this.router.navigate(['contact-form']);
+  }
+
+  onFilterChange(field: string, value: any) {
+    value = value.value;
+    // if (field === 'date_birthday' && value.value) {
+
+    // } else {
+
+    // }
+    this.store.dispatch(
+      setFilter({ filters: { [field]: value } })
+    );
   }
 }
