@@ -13,16 +13,26 @@
         [globalFilterFields]="['name', 'last_name']">
         <ng-template pTemplate="header">
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Sexo</th>
-                <th>Fecha de nacimiento</th>
-                <th>Email</th>
-                <th>Dirección</th>
-                <th>País</th>
-                <th>Departamento</th>
-                <th>Ciudad</th>
-                <th>Comentario</th>
+                <th pSortableColumn="name" style="width:20%">
+                    Nombre <p-sortIcon field="name" />
+                <th pSortableColumn="last_name" style="width:20%">
+                    Apellido <p-sortIcon field="last_name" />
+                <th pSortableColumn="sex" style="width:20%">
+                    Sexo <p-sortIcon field="sex" />
+                <th pSortableColumn="date_birthday" style="width:20%">
+                    Fecha de nacimiento <p-sortIcon field="date_birthday" />
+                <th pSortableColumn="email" style="width:20%">
+                    Email <p-sortIcon field="email" />
+                <th pSortableColumn="addres" style="width:20%">
+                    Dirección <p-sortIcon field="addres" />
+                <th pSortableColumn="country" style="width:20%">
+                    País <p-sortIcon field="country" />
+                <th pSortableColumn="Deparment" style="width:20%">
+                    Departamento <p-sortIcon field="Deparment" />
+                <th pSortableColumn="City" style="width:20%">
+                    Ciudad <p-sortIcon field="City" />
+                <th pSortableColumn="comment" style="width:20%">
+                    Comentario <p-sortIcon field="comment" />
                 <th>Acciones</th>
             </tr>
             <tr>
