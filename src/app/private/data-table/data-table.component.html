@@ -5,7 +5,7 @@
 
 <div [hidden]="(loading$ | async)" class="card">
     <div class="mb-4">
-        <p-button (click)="addContact()" label="Agregar nuevo contacto" />
+        <p-button [routerLink]="'/contact-form'" label="Agregar nuevo contacto" />
     </div>
     <p-table
         [value]="(filteredUsers$! | async)"
@@ -37,7 +37,6 @@
                 </th>
                 <th>
                     <input (input)="onFilterChange('date_birthday', $event.target)" pInputText type="date">
-                    <!-- <p-calendar (onSelect)="onFilterChange('date_birthday', $event)" (onInput)="onFilterChange('date_birthday', $event.target)"  /> -->
                 </th>
                 <th>
                     <input (input)="onFilterChange('email', $event.target)" pInputText type="text">
@@ -73,8 +72,8 @@
                 <td>{{ user.comment }}</td>
                 <td>
                     <div class="inline-flex">
-                        <p-button class="mr-2" icon="pi pi-pen-to-square" />
-                        <p-button severity="danger" icon="pi pi-trash" />
+                        <p-button [routerLink]="'/contact-form/' + user.id" class="mr-2" icon="pi pi-pen-to-square" />
+                        <p-button (click)="deleteUser(user.id)" severity="danger" icon="pi pi-trash" />
                     </div>
                 </td>
             </tr>

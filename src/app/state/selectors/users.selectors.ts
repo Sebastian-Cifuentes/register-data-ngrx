@@ -21,6 +21,11 @@ export const selectLastUserId = createSelector(
     (users) => users[users.length - 1].id
 );
 
+export const selectUserById = (id: string) => createSelector(
+    selectUsersList,
+    (users) => users.find((user) => user.id === +id)
+);
+
 export const selectUsersFilters = createSelector(
     selectUsersFeature,
     (state: UserState) => state.filters

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBase } from '../../../../bases/form.base';
 import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { User } from '../../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-comments',
@@ -11,6 +12,8 @@ import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms
   styleUrl: './comments.component.scss'
 })
 export class CommentsComponent extends FormBase {
+
+  @Input() user!: User;
 
   constructor(
     private controlContainer: ControlContainer
@@ -25,6 +28,13 @@ export class CommentsComponent extends FormBase {
   init() {
     const form = this.controlContainer.control as FormGroup;
     this.load(form);
+    if (this.user) {
+      this.setData();
+    }
+  }
+
+  setData() {
+    this.getControl('comment').patchValue(this.user.comment);
   }
 
 }

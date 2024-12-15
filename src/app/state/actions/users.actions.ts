@@ -16,6 +16,16 @@ export const addUser = createAction(
     props<{user: User}>()
 );
 
+export const editUser = createAction(
+    '[Users List] Edit user',
+    props<{user: User}>()
+);
+
+export const deleteUser = createAction(
+    '[Users List] Delete user',
+    props<{id: number}>()
+);
+
 export const setFilter = createAction(
     '[Users List] Set Users Filter',
     props<{ filters: Partial<UserState['filters']> }>()

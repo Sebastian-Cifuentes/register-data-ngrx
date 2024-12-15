@@ -5,19 +5,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ageValidator } from '../../utils/validators/age.validator';
 import { countries } from '../../utils/data/countries';
 import { departments } from '../../utils/data/departments';
-import { sex } from '../../utils/data/sex';
 import { PersonalInfoComponent } from './component/personal-info/personal-info.component';
 import { AddressInfoComponent } from './component/address-info/address-info.component';
 import { CommentsComponent } from './component/comments/comments.component';
 import { Store } from '@ngrx/store';
 import { format } from 'date-fns';
 import { User } from '../../interfaces/user.interface';
-import { addUser } from '../../state/actions/users.actions';
-import { Observable, Subscription } from 'rxjs';
-import { selectLastUserId } from '../../state/selectors/users.selectors';
-import { Country } from '../../interfaces/country.interface';
-import { Department } from '../../interfaces/department.interface';
-import { City } from '../../interfaces/city.interface';
+import { addUser, editUser } from '../../state/actions/users.actions';
+import { Subscription } from 'rxjs';
+import { selectLastUserId, selectUserById } from '../../state/selectors/users.selectors';
 import { Router } from '@angular/router';
 
 
@@ -29,17 +25,14 @@ import { Router } from '@angular/router';
   styleUrl: './contact-form.component.scss'
 })
 export class ContactFormComponent {
+  
 
   lastUserId!: number;
   suscription!: Subscription;
 
-  cities: any = [];
-  sexs: any = [];
-  countries: any = [];
-  departments: any = [];
-
   form!: FormGroup;
-  @Input() id!: number;
+  @Input() id!: string;
+  user!: User;
 
   constructor(
     private store: Store<any>,
@@ -48,9 +41,6 @@ export class ContactFormComponent {
 
   ngOnInit() {
     this.suscription = this.store.select(selectLastUserId).subscribe(id => this.lastUserId = id);
-    this.sexs = sex;
-    this.departments = departments;
-    this.countries = countries;
     this.form = new FormGroup({
       sex: new FormControl('', Validators.required),
       date_birthday: new FormControl('', [Validators.required, ageValidator(18)]),
@@ -63,6 +53,9 @@ export class ContactFormComponent {
       City: new FormControl({value: '', disabled: true}, Validators.required),
       comment: new FormControl('', Validators.required),
     });
+    if (this.id) {
+      this.suscription = this.store.select(selectUserById(this.id)).subscribe(user => this.user = user!);
+    }
   }
 
   ngOnDestroy(): void {
@@ -82,8 +75,13 @@ export class ContactFormComponent {
     this.form.value.Deparment = this.form.value.Deparment ? this.form.value.Deparment.name : '';
     this.form.value.City = this.form.value.City.name;
     const user: User = { ...this.form.value, date_birthday }
-    user.id = this.lastUserId + 1;
-    this.store.dispatch(addUser({user}));
+    if (this.id) {
+      user.id = +this.id;
+      this.store.dispatch(editUser({user}));
+    } else {
+      user.id = this.lastUserId + 1;
+      this.store.dispatch(addUser({user}));
+    }
     this.router.navigateByUrl('data');
   }
 }

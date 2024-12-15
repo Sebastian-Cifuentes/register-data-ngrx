@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormBase } from '../../../../bases/form.base';
 import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { cities } from '../../../../utils/data/cities';
 import { departments } from '../../../../utils/data/departments';
 import { countries } from '../../../../utils/data/countries';
+import { User } from '../../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-address-info',
@@ -15,6 +16,8 @@ import { countries } from '../../../../utils/data/countries';
   styleUrl: './address-info.component.scss'
 })
 export class AddressInfoComponent extends FormBase {
+
+  @Input() user!: User;
 
   cities: any = [];
   countries: any = [];
@@ -35,6 +38,9 @@ export class AddressInfoComponent extends FormBase {
     this.countries = countries;
     const form = this.controlContainer.control as FormGroup;
     this.load(form);
+    if (this.user) {
+      this.setData();
+    }
   }
 
   validateCountry() {
@@ -54,6 +60,14 @@ export class AddressInfoComponent extends FormBase {
     this.getControl('City').enable();
     const department = this.getControl('Deparment').value;
     this.cities = cities.filter(c => c.deparment === department.code);
+  }
+
+  setData() {
+    this.getControl('country')?.patchValue(countries.find(country => country.name === this.user.country));
+    this.getControl('Deparment')?.patchValue(departments.find(department => department.name === this.user.Deparment));
+    this.getControl('City')?.patchValue(cities.find(city => city.name === this.user.City));
+    this.validateCountry();
+    this.validateDepartment();
   }
 
 }
