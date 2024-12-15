@@ -9,3 +9,8 @@ export const loadedUsers = createAction(
     '[Users list] Loaded success',
     props<{users: User[]}>()
 );
+
+export const addUser = createAction(
+    '[Users list] Add user',
+    props<{user: User}>()
+);

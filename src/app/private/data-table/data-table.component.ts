@@ -6,12 +6,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { loadUsers } from '../../state/actions/users.actions';
 import { selectUsersList, selectUsersLoading } from '../../state/selectors/users.selectors';
+import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [TableModule, InputTextModule, AsyncPipe],
+  imports: [TableModule, InputTextModule, AsyncPipe, ButtonModule],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
@@ -21,12 +23,16 @@ export class DataTableComponent {
   users$: Observable<any> = new Observable();
 
   constructor(
-    private store: Store<any>
+    private store: Store<any>,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.loading$ = this.store.select(selectUsersLoading);
     this.users$ = this.store.select(selectUsersList);
-    this.store.dispatch(loadUsers());
+  }
+
+  addContact() {
+    this.router.navigate(['contact-form']);
   }
 }

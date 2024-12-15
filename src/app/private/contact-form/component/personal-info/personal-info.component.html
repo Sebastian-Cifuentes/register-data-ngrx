@@ -6,7 +6,8 @@
                 [ngClass]="getError('sex') ? 'invalid' : ''"
                 formControlName="sex"
                 [options]="sexs" 
-                optionLabel="name" 
+                optionLabel="name"
+                optionValue="name"
                 placeholder="Seleccioné un sexo" />
                 <small class="text-red-300" [hidden]="!getError('sex')">{{getErrorMessage('sex')}}</small>
         </div>

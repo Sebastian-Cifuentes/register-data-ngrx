@@ -12,7 +12,7 @@
                 formControlName="country"
                 (ngModelChange)="validateCountry()"
                 [options]="countries" 
-                optionLabel="name" 
+                optionLabel="name"
                 placeholder="Seleccioné un país" />
                 <small class="text-red-300" [hidden]="!getError('country')">{{getErrorMessage('country')}}</small>
         </div>
@@ -23,7 +23,7 @@
                 formControlName="Deparment"
                 (ngModelChange)="validateDepartment()"
                 [options]="departments" 
-                optionLabel="name" 
+                optionLabel="name"
                 placeholder="Seleccioné un departamento" />
                 <small class="text-red-300" [hidden]="!getError('Deparment')">{{getErrorMessage('Deparment')}}</small>
         </div>
@@ -33,7 +33,7 @@
                 [ngClass]="getError('City') ? 'invalid' : ''"
                 formControlName="City"
                 [options]="cities" 
-                optionLabel="name" 
+                optionLabel="name"
                 placeholder="Seleccione una ciudad" />
                 <small class="text-red-300" [hidden]="!getError('City')">{{getErrorMessage('City')}}</small>
         </div>

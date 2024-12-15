@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InfoComponent } from './component/info/info.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormErrorService } from '../../services/form-error.service';
 import { ageValidator } from '../../utils/validators/age.validator';
 import { countries } from '../../utils/data/countries';
 import { departments } from '../../utils/data/departments';
@@ -10,6 +9,17 @@ import { sex } from '../../utils/data/sex';
 import { PersonalInfoComponent } from './component/personal-info/personal-info.component';
 import { AddressInfoComponent } from './component/address-info/address-info.component';
 import { CommentsComponent } from './component/comments/comments.component';
+import { Store } from '@ngrx/store';
+import { format } from 'date-fns';
+import { User } from '../../interfaces/user.interface';
+import { addUser } from '../../state/actions/users.actions';
+import { Observable, Subscription } from 'rxjs';
+import { selectLastUserId } from '../../state/selectors/users.selectors';
+import { Country } from '../../interfaces/country.interface';
+import { Department } from '../../interfaces/department.interface';
+import { City } from '../../interfaces/city.interface';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-contact-form',
@@ -20,6 +30,9 @@ import { CommentsComponent } from './component/comments/comments.component';
 })
 export class ContactFormComponent {
 
+  lastUserId!: number;
+  suscription!: Subscription;
+
   cities: any = [];
   sexs: any = [];
   countries: any = [];
@@ -29,10 +42,12 @@ export class ContactFormComponent {
   @Input() id!: number;
 
   constructor(
-    private _formErrorService: FormErrorService
+    private store: Store<any>,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.suscription = this.store.select(selectLastUserId).subscribe(id => this.lastUserId = id);
     this.sexs = sex;
     this.departments = departments;
     this.countries = countries;
@@ -50,7 +65,25 @@ export class ContactFormComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.suscription) {
+      this.suscription.unsubscribe();
+    }
+  }
+
   save() {
-    console.log(this.form);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    let date_birthday = this.form.value.date_birthday;
+    date_birthday = format(date_birthday, 'yyyy-MM-dd');
+    this.form.value.country = this.form.value.country.name;
+    this.form.value.Deparment = this.form.value.Deparment.name;
+    this.form.value.City = this.form.value.City.name;
+    const user: User = { ...this.form.value, date_birthday }
+    user.id = this.lastUserId + 1;
+    this.store.dispatch(addUser({user}));
+    this.router.navigateByUrl('data');
   }
 }

@@ -1,5 +1,7 @@
 <p class="text-4xl text-center">Tabla de registros</p>
 
+<p-button (click)="addContact()" label="Agregar nuevo contacto" />
+
 <b [hidden]="!(loading$ | async)">Cargando... {{loading$ | async}}</b>
 
 <div [hidden]="(loading$ | async)" class="card">
