@@ -12,8 +12,7 @@
                 <app-address-info [user]="user"></app-address-info>
                 <app-comments [user]="user"></app-comments>
             </form>
-            <p-button [disabled]="!form.valid" (click)="save()" label="Enviar" />
-
+            <p-button [disabled]="!form.valid" (click)="save()" [label]="id ? 'Actualizar' : 'Enviar'" />
         </div>
     </div>
 </div>

@@ -1,26 +1,32 @@
 import { Component, Input } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { InfoComponent } from './component/info/info.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { format } from 'date-fns';
+import { Subscription } from 'rxjs';
+import { InfoComponent } from './component/info/info.component';
 import { ageValidator } from '../../utils/validators/age.validator';
-import { countries } from '../../utils/data/countries';
-import { departments } from '../../utils/data/departments';
 import { PersonalInfoComponent } from './component/personal-info/personal-info.component';
 import { AddressInfoComponent } from './component/address-info/address-info.component';
 import { CommentsComponent } from './component/comments/comments.component';
-import { Store } from '@ngrx/store';
-import { format } from 'date-fns';
 import { User } from '../../interfaces/user.interface';
 import { addUser, editUser } from '../../state/actions/users.actions';
-import { Subscription } from 'rxjs';
 import { selectLastUserId, selectUserById } from '../../state/selectors/users.selectors';
-import { Router } from '@angular/router';
+
 
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [InfoComponent, ReactiveFormsModule, PersonalInfoComponent, AddressInfoComponent, CommentsComponent, ButtonModule],
+  imports: [
+    InfoComponent, 
+    ReactiveFormsModule, 
+    PersonalInfoComponent, 
+    AddressInfoComponent, 
+    CommentsComponent, 
+    ButtonModule
+  ],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss'
 })
@@ -36,7 +42,7 @@ export class ContactFormComponent {
 
   constructor(
     private store: Store<any>,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
