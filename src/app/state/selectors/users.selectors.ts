@@ -18,7 +18,7 @@ export const selectUsersLoading = createSelector(
 
 export const selectLastUserId = createSelector(
     selectUsersList,
-    (users) => users[users.length - 1].id
+    (users) => users.length > 0 ? users[users.length - 1].id : 0
 );
 
 export const selectUserById = (id: string) => createSelector(
