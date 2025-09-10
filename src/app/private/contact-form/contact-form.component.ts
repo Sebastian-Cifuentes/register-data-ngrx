@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { format } from 'date-fns';
 import { Subscription } from 'rxjs';
@@ -11,10 +10,7 @@ import { PersonalInfoComponent } from './component/personal-info/personal-info.c
 import { AddressInfoComponent } from './component/address-info/address-info.component';
 import { CommentsComponent } from './component/comments/comments.component';
 import { User } from '../../interfaces/user.interface';
-import { addUser, editUser } from '../../state/actions/users.actions';
-import { selectLastUserId, selectUserById } from '../../state/selectors/users.selectors';
-
-
+import { UserFacade } from '../../services/usersFacade.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -41,12 +37,12 @@ export class ContactFormComponent {
   user!: User;
 
   constructor(
-    private store: Store<any>,
     private router: Router,
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit() {
-    this.suscription = this.store.select(selectLastUserId).subscribe(id => this.lastUserId = id);
+    this.suscription = this.userFacade.lastUserId$.subscribe(id => this.lastUserId = id);
     this.form = new FormGroup({
       sex: new FormControl('', Validators.required),
       date_birthday: new FormControl('', [Validators.required, ageValidator(18)]),
@@ -60,7 +56,7 @@ export class ContactFormComponent {
       comment: new FormControl('', Validators.required),
     });
     if (this.id) {
-      this.suscription = this.store.select(selectUserById(this.id)).subscribe(user => this.user = user!);
+      this.suscription = this.userFacade.userById(this.id).subscribe(user => this.user = user!);
     }
   }
 
@@ -83,10 +79,10 @@ export class ContactFormComponent {
     const user: User = { ...this.form.value, date_birthday }
     if (this.id) {
       user.id = +this.id;
-      this.store.dispatch(editUser({user}));
+      this.userFacade.editUser(user);
     } else {
       user.id = this.lastUserId + 1;
-      this.store.dispatch(addUser({user}));
+      this.userFacade.addUser(user);
     }
     this.router.navigateByUrl('data');
   }

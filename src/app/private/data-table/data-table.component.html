@@ -1,6 +1,8 @@
 <p-toast />
 <p class="text-4xl text-center">Tabla de registros</p>
 
+<p>{{loading$ | async}}</p>
+
 <b [hidden]="!(loading$ | async)">Cargando... </b>
 
 <div [hidden]="(loading$ | async)" class="card">
