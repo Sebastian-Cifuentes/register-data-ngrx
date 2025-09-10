@@ -18,7 +18,7 @@ export class ApiService implements IApiService {
   constructor(
     protected injector: Injector
   ) {
-    this.httpClient = injector.get(HttpClient);
+    this.httpClient = injector.get(HttpClient)
   }
 
   get<T>(path: string, options: { [param: string]: unknown } = {}): Observable<T> {
