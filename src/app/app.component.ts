@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { loadUsers } from './state/actions/users.actions';
+import { UserFacade } from './services/usersFacade.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +12,10 @@ import { loadUsers } from './state/actions/users.actions';
 export class AppComponent {
 
   constructor(
-    private store: Store<any>
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadUsers());
+    this.userFacade.loadUsers();
   }
 }
