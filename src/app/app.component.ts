@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UserFacade } from './services/usersFacade.service';
+import { UserFacade } from './share/facades/usersFacade.service';
 
 @Component({
   selector: 'app-root',

@@ -13,7 +13,7 @@ import { User } from '../../../../interfaces/user.interface';
 })
 export class CommentsComponent extends FormBase {
 
-  @Input() user!: User;
+  @Input() user!: User | null | undefined;
 
   constructor(
     private controlContainer: ControlContainer
@@ -34,7 +34,7 @@ export class CommentsComponent extends FormBase {
   }
 
   setData() {
-    this.getControl('comment').patchValue(this.user.comment);
+    this.getControl('comment').patchValue(this.user?.comment);
   }
 
 }

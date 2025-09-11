@@ -17,7 +17,7 @@ import { User } from '../../../../interfaces/user.interface';
 })
 export class PersonalInfoComponent extends FormBase {
 
-  @Input() user!: User;
+  @Input() user!: User | null | undefined;
   sexs: Sex[] = [];
 
   constructor(
@@ -40,12 +40,12 @@ export class PersonalInfoComponent extends FormBase {
   }
 
   setData() {
-    this.getControl('sex')?.setValue(this.user.sex);
-    this.getControl('name')?.setValue(this.user.name);
-    this.getControl('last_name')?.setValue(this.user.last_name);
-    this.getControl('email')?.setValue(this.user.email);
-    this.getControl('addres')?.setValue(this.user.addres);
-    this.getControl('date_birthday')?.setValue(new Date(this.user.date_birthday));
+    this.getControl('sex')?.setValue(this.user?.sex);
+    this.getControl('name')?.setValue(this.user?.name);
+    this.getControl('last_name')?.setValue(this.user?.last_name);
+    this.getControl('email')?.setValue(this.user?.email);
+    this.getControl('addres')?.setValue(this.user?.addres);
+    this.getControl('date_birthday')?.setValue(new Date(this.user?.date_birthday ?? new Date()));
   }
 
 }

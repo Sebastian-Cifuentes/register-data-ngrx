@@ -8,11 +8,11 @@
         </div>
         <div class="col-12 sm:col-12 md:col-12 lg:col-6">
             <form [formGroup]="form">
-                <app-personal-info [user]="user"></app-personal-info>
-                <app-address-info [user]="user"></app-address-info>
-                <app-comments [user]="user"></app-comments>
+                <app-personal-info [user]="user$ | async"></app-personal-info>
+                <app-address-info [user]="user$ | async"></app-address-info>
+                <app-comments [user]="user$ | async"></app-comments>
             </form>
-            <p-button [disabled]="!form.valid" (click)="save()" [label]="id ? 'Actualizar' : 'Enviar'" />
+            <p-button [disabled]="!form.valid" (click)="save(lastUserId)" [label]="id ? 'Actualizar' : 'Enviar'" />
         </div>
     </div>
 </div>

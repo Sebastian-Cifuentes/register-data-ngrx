@@ -8,7 +8,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Observable } from 'rxjs';
-import { UserFacade } from '../../services/usersFacade.service';
+import { UserFacade } from '../../share/facades/usersFacade.service';
 
 @Component({
   selector: 'app-data-table',
@@ -37,6 +37,7 @@ export class DataTableComponent {
   ) {}
 
   ngOnInit() {
+    // this.userFacade.loadUsers();
     this.loading$ = this.userFacade.loading$;
     this.filteredUsers$ = this.userFacade.filteredUsers$;
     this.userFacade.clearFilter();

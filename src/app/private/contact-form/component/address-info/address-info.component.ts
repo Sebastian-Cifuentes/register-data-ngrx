@@ -17,7 +17,7 @@ import { User } from '../../../../interfaces/user.interface';
 })
 export class AddressInfoComponent extends FormBase {
 
-  @Input() user!: User;
+  @Input() user!: User | null | undefined;
 
   cities: any = [];
   countries: any = [];
@@ -63,9 +63,9 @@ export class AddressInfoComponent extends FormBase {
   }
 
   setData() {
-    this.getControl('country')?.patchValue(countries.find(country => country.name === this.user.country));
-    this.getControl('Deparment')?.patchValue(departments.find(department => department.name === this.user.Deparment));
-    this.getControl('City')?.patchValue(cities.find(city => city.name === this.user.City));
+    this.getControl('country')?.patchValue(countries.find(country => country.name === this.user?.country));
+    this.getControl('Deparment')?.patchValue(departments.find(department => department.name === this.user?.Deparment));
+    this.getControl('City')?.patchValue(cities.find(city => city.name === this.user?.City));
     this.validateCountry();
     this.validateDepartment();
   }

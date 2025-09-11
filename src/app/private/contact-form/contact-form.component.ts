@@ -3,14 +3,17 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { format } from 'date-fns';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { InfoComponent } from './component/info/info.component';
 import { ageValidator } from '../../utils/validators/age.validator';
 import { PersonalInfoComponent } from './component/personal-info/personal-info.component';
 import { AddressInfoComponent } from './component/address-info/address-info.component';
 import { CommentsComponent } from './component/comments/comments.component';
 import { User } from '../../interfaces/user.interface';
-import { UserFacade } from '../../services/usersFacade.service';
+import { UserFacade } from '../../share/facades/usersFacade.service';
+import { UserFormFactory } from './services/user-form.factory';
+import { UserMapper } from './services/user.mapper';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact-form',
@@ -21,69 +24,47 @@ import { UserFacade } from '../../services/usersFacade.service';
     PersonalInfoComponent, 
     AddressInfoComponent, 
     CommentsComponent, 
-    ButtonModule
+    ButtonModule,
+    CommonModule
   ],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss'
 })
 export class ContactFormComponent {
   
-
-  lastUserId!: number;
-  suscription!: Subscription;
-
-  form!: FormGroup;
   @Input() id!: string;
-  user!: User;
+  lastUserId!: number;
+  form!: FormGroup;
+  user$!: Observable<User | undefined>;
 
   constructor(
     private router: Router,
-    private userFacade: UserFacade
+    private userFacade: UserFacade,
+    private formFactory: UserFormFactory,
+    private mapper: UserMapper
   ) {}
 
   ngOnInit() {
-    this.suscription = this.userFacade.lastUserId$.subscribe(id => this.lastUserId = id);
-    this.form = new FormGroup({
-      sex: new FormControl('', Validators.required),
-      date_birthday: new FormControl('', [Validators.required, ageValidator(18)]),
-      name: new FormControl('', Validators.required),
-      last_name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      addres: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      Deparment: new FormControl({value: '', disabled: true}, Validators.required),
-      City: new FormControl({value: '', disabled: true}, Validators.required),
-      comment: new FormControl('', Validators.required),
-    });
+    this.form = this.formFactory.createForm();
+    this.userFacade.lastUserId$.subscribe(id => this.lastUserId = id ?? undefined);
     if (this.id) {
-      this.suscription = this.userFacade.userById(this.id).subscribe(user => this.user = user!);
+      this.user$ = this.userFacade.userById(this.id);
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.suscription) {
-      this.suscription.unsubscribe();
-    }
-  }
-
-  save() {
+  save(lastUserId: number) {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    let date_birthday = this.form.value.date_birthday;
-    date_birthday = format(date_birthday, 'yyyy-MM-dd');
-    this.form.value.country = this.form.value.country.name;
-    this.form.value.Deparment = this.form.value.Deparment ? this.form.value.Deparment.name : '';
-    this.form.value.City = this.form.value.City.name;
-    const user: User = { ...this.form.value, date_birthday }
+    const user = this.mapper.toDomain(this.form.value, lastUserId, this.id);
+
     if (this.id) {
-      user.id = +this.id;
       this.userFacade.editUser(user);
     } else {
-      user.id = this.lastUserId + 1;
       this.userFacade.addUser(user);
     }
+
     this.router.navigateByUrl('data');
   }
 }

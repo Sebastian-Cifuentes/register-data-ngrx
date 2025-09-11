@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { selectFilteredUsers, selectLastUserId, selectUserById, selectUsersLoading } from "../state/selectors/users.selectors";
-import { AppState } from "../interfaces/app.state";
-import { deleteUser, loadUsers, clearFilter, setFilter, editUser, addUser } from '../state/actions/users.actions';
-import { UserState } from "../interfaces/user.state";
+import { selectFilteredUsers, selectLastUserId, selectUserById, selectUsersLoading } from "../../state/selectors/users.selectors";
+import { AppState } from "../../interfaces/app.state";
+import { deleteUser, loadUsers, clearFilter, setFilter, editUser, addUser } from '../../state/actions/users.actions';
+import { UserState } from "../../interfaces/user.state";
 import { Observable } from "rxjs";
-import { User } from "../interfaces/user.interface";
+import { User } from "../../interfaces/user.interface";
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
@@ -21,7 +21,7 @@ export class UserFacade {
     }
 
     userById(id: string): Observable<User | undefined> {
-        return this.store.select(selectUserById(id));
+        return this.store.select(selectUserById(id)) ?? undefined;
     }
 
     deleteUser(id: number) {
