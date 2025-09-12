@@ -7,6 +7,15 @@
     <div class="mb-4">
         <p-button [routerLink]="'/contact-form'" label="Agregar nuevo contacto" />
     </div>
+    <div class="mb-4">
+        <p-button (click)="export('csv')" label="Export como CSV" />
+    </div>
+    <div class="mb-4">
+        <p-button (click)="export('pdf')" label="Exportar como PDF" />
+    </div>
+    <div class="mb-4">
+        <p-button (click)="export('excel')" label="Export como Excel" />
+    </div>
     <p-table
         [value]="(filteredUsers$! | async)"
         [tableStyle]="{ 'min-width': '50rem' }"

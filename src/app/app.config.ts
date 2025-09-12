@@ -10,6 +10,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { userFeatureKey, userReducer } from './state/reducers/users.reducers';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { UsersEffects } from './state/effects/users.effect';
+import { EXPORT_STRATEGIES, strategies } from './share/export';
 
 
 export const appConfig: ApplicationConfig = {
@@ -20,11 +21,13 @@ export const appConfig: ApplicationConfig = {
     provideState({name: userFeatureKey, reducer: userReducer}),
     provideEffects(UsersEffects),
     provideStoreDevtools({
-        maxAge: 25, // Retains last 25 states
-        logOnly: !isDevMode(), // Restrict extension to log-only mode
+        maxAge: 25,
+        logOnly: !isDevMode(),
     }),
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    importProvidersFrom([BrowserAnimationsModule])],
+    importProvidersFrom([BrowserAnimationsModule]),
+    { provide: EXPORT_STRATEGIES, useValue: strategies }
+  ],
 };

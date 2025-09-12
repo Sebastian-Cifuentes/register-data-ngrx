@@ -7,8 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { UserFacade } from '../../share/facades/usersFacade.service';
+import { ExportFactory } from '../../share/export/export-factory.service';
 
 @Component({
   selector: 'app-data-table',
@@ -24,7 +25,9 @@ import { UserFacade } from '../../share/facades/usersFacade.service';
   ],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss',
-  providers: [MessageService]
+  providers: [
+    MessageService,
+  ]
 })
 export class DataTableComponent {
 
@@ -33,7 +36,8 @@ export class DataTableComponent {
 
   constructor(
     private messageService: MessageService,
-    private userFacade: UserFacade
+    private userFacade: UserFacade,
+    private exportFactory: ExportFactory
   ) {}
 
   ngOnInit() {
@@ -55,5 +59,14 @@ export class DataTableComponent {
 
   showMessage(detail: string, summary: string) {
     this.messageService.add({ severity: 'success', summary, detail });
+  }
+
+  export(type: 'csv' | 'pdf' | 'excel') {
+    this.userFacade.filteredUsers$
+      .pipe(take(1))
+      .subscribe(data => {
+        const exportStrategy = this.exportFactory.getStrategy(type);
+        exportStrategy.export(data);
+      });
   }
 }
