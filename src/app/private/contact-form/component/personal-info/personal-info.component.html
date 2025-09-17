@@ -1,4 +1,4 @@
-<div [formGroup]="parentForm">
+<form [formGroup]="parentForm">
     <div class="formgrid grid">
         <div class="flex flex-column field col-12 md:col-6">
             <label for="sex" class="text-gray-800">Sexo<span class="text-red-500">*</span></label>
@@ -32,4 +32,4 @@
             <small class="text-red-300" [hidden]="!getError('email')">{{getErrorMessage('email')}}</small>
         </div>
     </div>
-</div>
+</form>
