@@ -6,7 +6,7 @@ describe('PersonalInfoComponent', () => {
   let fixture: ComponentFixture<PersonalInfoComponent>;
   let component: PersonalInfoComponent;
 
-  // ✅ create a real FormGroup that your component will bind to
+  // create a real FormGroup that your component will bind to
   const mockFormGroup = new FormGroup({
     sex: new FormControl(''),
     name: new FormControl(''),
@@ -16,13 +16,13 @@ describe('PersonalInfoComponent', () => {
     date_birthday: new FormControl(''),
   });
 
-  // ✅ mock FormGroupDirective and attach the form
+  // mock FormGroupDirective and attach the form
   const mockFormGroupDirective = new FormGroupDirective([], []);
   mockFormGroupDirective.form = mockFormGroup;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PersonalInfoComponent, ReactiveFormsModule], // ✅ standalone goes in imports
+      imports: [PersonalInfoComponent, ReactiveFormsModule],
       providers: [
         { provide: ControlContainer, useValue: mockFormGroupDirective },
         { provide: FormGroupDirective, useValue: mockFormGroupDirective },
